@@ -1,0 +1,7 @@
+{
+  "chat.mcp.serverSampling": {
+    "mcp/.vscode/mcp.json: test": {
+      "allowedModels": ["copilot/gemini-2.0-flash-001"]
+    }
+  }
+}

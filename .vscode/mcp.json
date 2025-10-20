@@ -1,0 +1,13 @@
+{
+	"servers": {
+		"test": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"run",
+				"src/server.js"
+			]
+		}
+	},
+	"inputs": []
+}
