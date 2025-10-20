@@ -19,8 +19,6 @@ if (!apiKey) throw new Error("TAVILY_API_KEY missing in config!");
 
 const tavlyClient = tavily({ apiKey });
 
-
-
 async function performSearch(query, maxResults = 5) {
   console.error("🔍 Searching Tavily for:", query);
 
@@ -45,16 +43,28 @@ async function performSearch(query, maxResults = 5) {
 }
 
 server.tool(
-  "websearch",
+  "Search trends",
+  "Latest email marketing trends 2025",
   {
-    description: "Search for email marketing trends",
-    inputSchema: z.object({
-      query: z.string(),
-      maxResults: z.number().default(5),
-    }),
+    query: z.string(),
+    maxResults: z.number().default(5),
   },
-  async (input) => {
-    return await performSearch(input.query, input.maxResults);
+  async ({ query, maxResults }) => {
+    const data = await tavlyClient.search(query, {
+      maxResults,
+      searchDepth: "advanced",
+      "include_raw_content": true,
+      includeRawContent: true,
+      includeAnswer: true,
+    });
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(data),
+        },
+      ],
+    };
   }
 );
 
